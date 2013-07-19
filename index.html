@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+<title>Onward to Olin in...</title>
+<link rel="shortcut icon" href="favicon.ico" >
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/ui/jquery-ui-git.js"></script>
+<script src="jquery.timepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/jquery-ui-git.css">
+<link rel="stylesheet" type="text/css" href="jquery.timepicker.css">
+<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+<img src="" id="bg"></img>
+	<div id="zero">
+		<div>
+			<img id="logo" src="images/logo.png"></img>
+		</div>
+	</div>
+	<div id="shell">
+		<div id="timer">
+            <form id="setup">
+            <b>Date:</b> <input type="text" id="datepicker" />
+            <b>Time:</b> <input type="text" id="timepicker" />
+            <input type="radio" name="display" value="full"> Full Display
+            <input type="radio" name="display" value="days"> Days Only
+            <input type="submit" value="Submit" id="submit">
+            </form>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="full.js"></script>
+<script type="text/javascript" src="days.js"></script>
+<script>
+var list = ["images/1.jpg","images/2.jpg","images/3.jpg","images/4.jpg","images/5.jpg","images/6.jpg","images/7.jpg","images/8.jpg","images/9.jpg","images/10.jpg", "images/11.jpg", "images/12.jpg"];
+
+
+//Check to see if the page is setup right
+  if (location.href === "http://" + location.hostname + "/Timer/index.html" || location.href === "http://" + location.hostname + "/Timer/") {
+    refreshBG();
+    $("#timer").html("Please set an end time by going <a href='./index.html#customize'>here</a>.")
+  }
+  else if (location.href === "http://" + location.hostname + "/Timer/index.html#customize") {
+    refreshBG();
+    $('#shell').css({
+        'top' : '20px',
+        'bottom' : 'auto',
+        width : '880px'
+    });
+    $('#zero').css({
+        'bottom' : '20px',
+        'top' : 'auto'
+    });
+    $('#timer').width('850px');
+    $("#datepicker").datepicker();
+    $('#timepicker').timepicker({ 
+            'scrollDefaultNow': true,
+            'step': 15
+        });
+    $("#setup").submit(function(e) {
+        e.preventDefault();
+        var selected = $("#setup input[type='radio']:checked");
+        var inputs = $('#setup :input');
+        var date = $("#datepicker").val();
+        var date_process = date.split("/");
+        var time = $("#timepicker").val();
+        var time_process = time.split(":");
+        if (time_process[1].charAt(2) === "p") {
+            hold = parseInt(time_process[0]);
+            time_process[0] = hold + 12;
+        }
+        time_process[1] = time_process[1].substring(0,2)
+        var display = selected.val();
+        window.location = "http://" + location.hostname + "/Timer/index.html" + "#year=" + date_process[2] + ";month=" + date_process[0] + ";day=" + date_process[1] + ";hour=" + time_process[0].toString() + ";minute=" + time_process[1] + ";display=" + display;
+        location.reload();
+    });
+  }
+  else {
+  //Prepare the data
+
+    var raw_data = location.href.split("=");
+    var data = new Array();
+    var test 
+    raw_data.forEach(function(entry) {
+        data.push(entry.split(";"));
+    });
+    var year = data[1][0];
+    var month = data[2][0];
+    var day = data[3][0];
+    var hour = data[4][0];
+    var minute = data[5][0];
+    var display = data[6][0];
+
+    var set_time  = year + "/" + month + "/" + day + " " + hour + ":" + minute
+
+    //Initialize the page
+    $(document).ready(function () {
+
+    refreshBG(); //Note that setInterval does not call the function at the start
+
+    setInterval("refreshBG()", 30000);
+  
+    display_selector(set_time, display)
+
+    });
+
+  }
+
+  //Set the Display Type
+  function display_selector(set_time,display) {
+    var end_time = new Date(set_time);
+    if (display == "full") {
+        var full_display = setInterval(function() {
+        finalCountdown(end_time);
+        }, 100);
+    }
+    if (display == "days") {
+        var days_display = setInterval(function() {
+        daysCountdown(end_time);
+        }, 100);
+        $("#timer").width("600px")
+        $("#shell").width("630px")
+    }
+
+};
+
+
+
+//Toggle the output
+$("#logo").click(function(){
+    transfer = location.href.split(display);
+    if (display === "full") {
+        window.location = transfer[0] + "days";
+    }
+    if (display === "days") {
+        window.location = transfer[0] + "full";
+
+    }
+    location.reload();
+});
+
+// Random BG Code
+$(function() {   
+
+        var theWindow        = $(window),
+            $bg              = $("#bg"),
+            aspectRatio      = $bg.width() / $bg.height();
+
+        function resizeBg() {
+
+                if ( (theWindow.width() / theWindow.height()) < aspectRatio ) {
+                    $bg
+                        .removeClass()
+                        .addClass('bgheight');
+                } else {
+                    $bg
+                        .removeClass()
+                        .addClass('bgwidth');
+                }
+
+        }
+
+        theWindow.resize(function() {
+                resizeBg();
+        }).trigger("resize");
+
+});
+
+function refreshBG() {
+    var num = Math.floor(Math.random()*12)
+
+    $("#bg").attr("src", list[num]);
+};
+
+</script>
+</html>

@@ -1,0 +1,74 @@
+body{
+font-family: Trebuchet, Lucida Sans, Arial, Sans-Serif;
+min-height: 500px;
+min-width: 1000px;
+padding: 0;
+margin: 0;
+}
+
+#bg { position: fixed; top: 0; left: 0; }
+.bgwidth { width: 100%; }
+.bgheight { height: 100%; }
+
+
+#zero{
+position: absolute;
+top: 25px;
+right: 30px;
+float:left;
+text-align:center;
+height: 200px;
+width: 200px;
+background: rgb(0, 0, 0); /* The Fallback */
+background: rgba(0, 0, 0, 0.7);
+border-radius:100px;
+-webkit-border-radius:100px;
+}
+
+#logo{
+width:180px; 
+height:180px;
+position: relative;
+top: 10px;
+}
+
+
+#shell{
+position: absolute;
+bottom: 25px;
+left: 30px;
+text-align:center;
+height: 65px;
+width: 1020px;
+background: rgb(0, 0, 0); /* The Fallback */
+background: rgba(0, 0, 0, 0.7);
+-webkit-border-radius: 10px;
+border-radius: 10px; /* future proofing */
+-khtml-border-radius: 10px; /* for old Konqueror browsers */
+}
+
+#timer {
+width: 990px;
+height: 35px;
+position: relative;
+top: 10px;
+padding: 5px;
+margin: 0px auto;
+background: #ffffff; 
+color: #000099;
+font-size: 30px;
+}
+
+#setup {
+padding: 2.5px;
+margin: 0 auto;
+font-size: 20px;
+}
+
+#submit {
+ font-size: 24;
+ width: 60px;
+ height: 30px;
+ margin: 0px 0px 20px 10px;
+ padding: 0;
+}
