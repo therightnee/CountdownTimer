@@ -11,8 +11,7 @@
 <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 
-<body>
-<img src="" id="bg"></img>
+<body id="bg">
 	<div id="zero">
 		<div>
 			<img id="logo" src="images/logo.png"></img>
@@ -85,12 +84,15 @@ var list = ["images/1.jpg","images/2.jpg","images/3.jpg","images/4.jpg","images/
     raw_data.forEach(function(entry) {
         data.push(entry.split(";"));
     });
-    var year = data[1][0];
-    var month = data[2][0];
-    var day = data[3][0];
-    var hour = data[4][0];
-    var minute = data[5][0];
-    var display = data[6][0];
+
+    if (raw_data.length > 6) {
+        var year = data[1][0];
+        var month = data[2][0];
+        var day = data[3][0];
+        var hour = data[4][0];
+        var minute = data[5][0];
+        var display = data[6][0];
+    }
 
     var set_time  = year + "/" + month + "/" + day + " " + hour + ":" + minute
 
@@ -170,7 +172,7 @@ $(function() {
 function refreshBG() {
     var num = Math.floor(Math.random()*12)
 
-    $("#bg").attr("src", list[num]);
+    $("#bg").css("background-image", 'url(' + list[num] + ')');
 };
 
 </script>
