@@ -36,11 +36,11 @@ var list = ["images/1.jpg","images/2.jpg","images/3.jpg","images/4.jpg","images/
 
 
 //Check to see if the page is setup right
-  if (location.href === "http://" + location.hostname + "/Timer/index.html" || location.href === "http://" + location.hostname + "/Timer/") {
+  if (location.href === "http://" + location.hostname + "/CountdownTimer/index.html" || location.href === "http://" + location.hostname + "/CountdownTimer/") {
     refreshBG();
     $("#timer").html("Please set an end time by going <a href='./index.html#customize'>here</a>.")
   }
-  else if (location.href === "http://" + location.hostname + "/Timer/index.html#customize") {
+  else if (location.href === "http://" + location.hostname + "/CountdownTimer/index.html#customize") {
     refreshBG();
     $('#shell').css({
         'top' : '20px',
@@ -71,7 +71,7 @@ var list = ["images/1.jpg","images/2.jpg","images/3.jpg","images/4.jpg","images/
         }
         time_process[1] = time_process[1].substring(0,2)
         var display = selected.val();
-        window.location = "http://" + location.hostname + "/Timer/index.html" + "#year=" + date_process[2] + ";month=" + date_process[0] + ";day=" + date_process[1] + ";hour=" + time_process[0].toString() + ";minute=" + time_process[1] + ";display=" + display;
+        window.location = "http://" + location.hostname + "/CountdownTimer/index.html" + "#year=" + date_process[2] + ";month=" + date_process[0] + ";day=" + date_process[1] + ";hour=" + time_process[0].toString() + ";minute=" + time_process[1] + ";display=" + display;
         location.reload();
     });
   }
@@ -92,6 +92,13 @@ var list = ["images/1.jpg","images/2.jpg","images/3.jpg","images/4.jpg","images/
         var hour = data[4][0];
         var minute = data[5][0];
         var display = data[6][0];
+    } else {
+        var year    = 0;
+        var month   = 0;
+        var day     = 0;
+        var hour    = 0;
+        var minute  = 0;
+        var display = 0;
     }
 
     var set_time  = year + "/" + month + "/" + day + " " + hour + ":" + minute
